@@ -1,5 +1,3 @@
-# Prior-Fitted Planning
-
 ## Overview
 
 Prior-fitted networks amortize Bayesian inference: instead of fitting a model to
