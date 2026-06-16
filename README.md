@@ -63,9 +63,9 @@ by a single `build_Z` from exploration statistics, so the model's input
 distribution matches at train and test time. Each state-action pair $(s,a)$
 carries three features:
 
-- $\log(1 + N_{s,a})$, the visit count, which says how much evidence backs this row;
-- $\hat r_{s,a}$, the mean observed reward, normalized by the per-MDP reward scale;
-- $\hat P(\cdot \mid s,a)$, the empirical transition row (a uniform prior when unvisited).
+- $\log(1 + N_{s,a})$ the visit count, which says how much evidence backs this row;
+- $\hat r_{s,a}$ the mean observed reward, normalized by the per-MDP reward scale;
+- $\hat P(\cdot \mid s,a)$ the empirical transition row (a uniform prior when unvisited).
 
 The exploration budget is randomized per MDP (a log-uniform mean count, then a
 Poisson count per $(s,a)$), so the model sees everything from the near-zero-data
@@ -84,7 +84,7 @@ cosine-decay.
 
 ## Prior over MDPs
 
-We sample finite MDPs $\mathcal{M} = (\mathcal{S}, \mathcal{A}, P, r, \gamma)$
+We sample finite MDPs $M = (\mathcal{S}, \mathcal{A}, P, r, \gamma)$
 with controlled variation across:
 
 - state scale $S$, action multiplicity $A$;
