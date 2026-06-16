@@ -10,7 +10,7 @@ Here we apply that idea to reinforcement learning. The "dataset" is the
 experience gathered in an MDP, and the quantity we want is the optimal policy
 $\pi^*(\cdot \mid s)$. We sample a broad prior over finite MDPs, compute the
 exact optimal action values $Q^*$ for each with value iteration, and train a
-network to predict the induced policy $\pi^* = \operatorname{softmax}(Q^*/\tau)$
+network to predict the induced policy $\pi^* = \mathrm{softmax}(Q^*/\tau)$
 from *finite, noisy exploration statistics* of that MDP. At test time the model
 is dropped into an unseen environment, gathers experience online, and re-plans
 its policy in a forward pass. Planning becomes amortized inference rather than
@@ -76,7 +76,7 @@ model is reward-scale invariant.
 ### Loss
 
 A soft cross-entropy distillation: the target is the Boltzmann policy
-$\operatorname{softmax}(Q^*/\tau)$ over valid actions, and the loss is its cross
+$\mathrm{softmax}(Q^*/\tau)$ over valid actions, and the loss is its cross
 entropy against the model's predicted policy $\pi_\theta(\cdot \mid s)$ (the
 softmax of the head's logits). The KL between the predicted and target policies
 is logged as a diagnostic only. Optimized with AdamW under linear-warmup /
