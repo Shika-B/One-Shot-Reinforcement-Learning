@@ -170,7 +170,7 @@ Concretely:
 - After $K$ steps, the policy $\pi(\cdot \mid s)$ is read off, as a softmax over
   per-action logits computed from the final state and state-action embeddings.
 
-The propagation layer is **weight-tied** across the $L$ iterations, so the model
+The propagation layer is **weight-tied** across the $K$ iterations, so the model
 can be unrolled deeper at evaluation than during training (`--eval-iters`).
 
 See [`model.py`](model.py) for the exact attention, update and readout
