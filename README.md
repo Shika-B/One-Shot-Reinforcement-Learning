@@ -6,9 +6,9 @@ forward pass approximates the posterior on any new dataset drawn from that prior
 
 Here we apply that idea to reinforcement learning. The "dataset" is the
 experience gathered in an MDP, and the quantity we want is the optimal policy
-$\pi^*(\cdot \mid s)$. We sample a broad prior over finite MDPs, compute the
-exact optimal action values $Q^*$ for each with value iteration, and train a
-network to predict the induced policy $\pi^* = \mathrm{softmax}(Q^*/\tau)$
+$\pi^\star(\cdot \mid s)$. We sample a broad prior over finite MDPs, compute the
+exact optimal action values $Q^\star$ for each with value iteration, and train a
+network to predict the induced policy $\pi^\star = \mathrm{softmax}(Q^\star/\tau)$
 from *finite, noisy exploration statistics* of that MDP. At test time the model
 is dropped into an unseen environment, gathers experience online, and re-plans
 its policy in a forward pass. Planning becomes amortized inference rather than
@@ -41,13 +41,13 @@ Four stages, one per source file:
    diversity in size, connectivity, geometry, stochasticity and reward sparsity.
 
 2. **Targets** ([`train.py`](train.py), `q_star`). Exact value iteration on the
-   *true* dynamics gives the optimal $Q^*(s,a)$, the label the model learns to
+   *true* dynamics gives the optimal $Q^\star(s,a)$, the label the model learns to
    reproduce.
 
 3. **Training** ([`train.py`](train.py) + [`model.py`](model.py)). The model never
    sees the oracle dynamics. Each step simulates a finite exploration budget
    against $(P, r)$, turns the resulting empirical statistics into model input,
-   and regresses the predicted $Q$ onto $Q^*$.
+   and regresses the predicted $Q$ onto $Q^\star$.
 
 4. **Evaluation** ([`evaluation.py`](evaluation.py)). The model is dropped into
    held-out environments ([`gridworld.py`](gridworld.py),
@@ -68,13 +68,13 @@ carries three features:
 The exploration budget is randomized per MDP (a log-uniform mean count, then a
 Poisson count per $(s,a)$), so the model sees everything from the near-zero-data
 regime, where it must fall back to the prior, up to well-sampled rows. Rewards
-and the $Q^*$ target are both normalized by the per-MDP reward scale, so the
+and the $Q^\star$ target are both normalized by the per-MDP reward scale, so the
 model is reward-scale invariant.
 
 ### Loss
 
 A soft cross-entropy distillation: the target is the Boltzmann policy
-$\mathrm{softmax}(Q^*/\tau)$ over valid actions, and the loss is its cross
+$\mathrm{softmax}(Q^\star/\tau)$ over valid actions, and the loss is its cross
 entropy against the model's predicted policy $\pi_\theta(\cdot \mid s)$ (the
 softmax of the head's logits). The KL between the predicted and target policies
 is logged as a diagnostic only. Optimized with AdamW under linear-warmup /
