@@ -15,8 +15,9 @@ accumulated statistics to both estimators:
 Both produce a policy from the data only; both are scored by the *exact*
 discounted value of that policy at the start state, normalized so a random
 policy is 0 and the value-iteration optimum is 1 (same metric as baseline.py).
-The output is one panel per benchmark, plotting normalized start-state value
-against the number of transitions in the dataset.
+The output is a single panel plotting normalized start-state value against the
+number of episodes in the dataset, with color encoding the environment and line
+style the method (solid = in-context, dashed = VI-LCB).
 
     python baseline/offline.py best_model.pt
     python baseline/offline.py best_model.pt --seeds 8 --out off.png
@@ -208,6 +209,16 @@ def main():
         if style in plt.style.available:
             plt.style.use(style)
             break
+
+    plt.rcParams.update({
+        "font.size": 14,
+        "axes.titlesize": 16,
+        "axes.labelsize": 15,
+        "xtick.labelsize": 13,
+        "ytick.labelsize": 13,
+        "legend.fontsize": 8,
+    })
+        
     fig, ax = plt.subplots(figsize=(8.0, 5.0), constrained_layout=True)
 
     # each episode is EPISODE_LEN transitions, so report dataset size in episodes
@@ -252,10 +263,10 @@ def main():
     method_handles = [Line2D([0], [0], color="0.3", lw=2, linestyle=METHOD_STYLE[m], label=m)
                       for m in METHOD_STYLE]
     leg1 = ax.legend(handles=env_handles, title="environment", loc="lower right",
-                     frameon=True, fontsize=9)
+                     frameon=True, fontsize=13)
     ax.add_artist(leg1)
-    ax.legend(handles=method_handles, title="method", loc="upper left",
-              frameon=True, fontsize=9)
+    ax.legend(handles=method_handles, title="method", loc="lower center",
+              frameon=True, fontsize=13)
 
     fig.savefig(args.out, dpi=150)
     print(f"saved {args.out}")

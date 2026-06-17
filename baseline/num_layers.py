@@ -82,13 +82,13 @@ def main():
 
     plt.rcParams.update({
         "font.size": 14,
-        "axes.titlesize": 17,
+        "axes.titlesize": 16,
         "axes.labelsize": 15,
-        "xtick.labelsize": 10,
+        "xtick.labelsize": 11,
         "ytick.labelsize": 13,
         "legend.fontsize": 8,
     })
-
+        
     env_color = {name: ENV_PALETTE[i % len(ENV_PALETTE)]
                  for i, name in enumerate(envs)}
 
@@ -103,7 +103,7 @@ def main():
                           probe_reps=probe_reps)
 
     fig, axes = plt.subplots(
-        math.ceil(len(K_VALUES) / 2), 2, figsize=(len(K_VALUES), 7.0),
+        math.ceil(len(K_VALUES) / 2), 2, figsize=(len(K_VALUES) * 1.2, 8.4),
         sharey=True, constrained_layout=True,
     )
     if len(K_VALUES) == 1:
