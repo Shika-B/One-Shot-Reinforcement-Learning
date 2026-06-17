@@ -5,7 +5,7 @@ one dataset, you train a network on data sampled from a *prior* so that a single
 forward pass approximates the posterior on any new dataset drawn from that prior.
 
 Here we apply that idea to reinforcement learning. The "dataset" is the
-experience gathered in an MDP, and the quantity we want is the optimal policy
+experience gathered in a MDP, and the quantity we want is the optimal policy
 $\pi^\star(\cdot \mid s)$. We sample a broad prior over finite MDPs, compute the
 exact optimal action values $Q^\star$ for each with value iteration, and train a
 network to predict the induced policy $\pi^\star = \mathrm{softmax}(Q^\star/\tau)$
