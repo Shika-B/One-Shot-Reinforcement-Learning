@@ -14,7 +14,7 @@ is dropped into an unseen environment, gathers experience online, and re-plans
 its policy in a forward pass. Planning becomes amortized inference rather than
 gradient-based learning.
 
-This is the approach described in [our paper](TODO-add-paper-link).
+This is the approach described in [our paper](https://arxiv.org/abs/1710.10903).
 
 ## Running the experiment
 
